@@ -1,5 +1,4 @@
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticated
 from products.permissions import IsAdminOrStaffOrCreate, StaffOrGET
 from rest_framework.generics import (
     ListCreateAPIView,
@@ -12,7 +11,7 @@ from .serializers import ProductSerializer
 
 class ProductView(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated, IsAdminOrStaffOrCreate]
+    permission_classes = [IsAdminOrStaffOrCreate]
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -23,7 +22,7 @@ class ProductView(ListCreateAPIView):
 
 class ProductDetailViewAndListID(RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated, StaffOrGET]
+    permission_classes = [StaffOrGET]
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
@@ -32,9 +31,6 @@ class ProductDetailViewAndListID(RetrieveUpdateDestroyAPIView):
 
 
 class ProductDetailListView(RetrieveAPIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
-
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     lookup_field = "name__iexact"
