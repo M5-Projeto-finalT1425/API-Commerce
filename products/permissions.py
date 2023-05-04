@@ -5,7 +5,7 @@ from rest_framework.views import View
 class IsAdminOrStaffOrCreate(permissions.BasePermission):
     def has_permission(self, request, view: View) -> bool:
         return (
-            request.user.is_superuser
-            or request.user.is_staff
-            or request.method == "POST"
+            request.user.is_staff
+            and request.method == "POST"
+            or request.method == "GET"
         )
