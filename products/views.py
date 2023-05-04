@@ -1,4 +1,6 @@
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from django_filters import rest_framework as filters
+from django_filters.rest_framework import DjangoFilterBackend
 from products.permissions import IsAdminOrStaffOrCreate, StaffOrGET
 from rest_framework.generics import (
     ListCreateAPIView,
@@ -16,21 +18,17 @@ class ProductView(ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ("id", "name", "category")
+
     def perform_create(self, serializer):
         return serializer.save(account=self.request.user)
 
 
-class ProductDetailViewAndListID(RetrieveUpdateDestroyAPIView):
+class ProductDetailView(RetrieveUpdateDestroyAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [StaffOrGET]
 
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    lookup_field = "id"
     lookup_url_kwarg = "product_id"
-
-
-class ProductDetailListView(RetrieveAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
-    lookup_field = "name__iexact"
