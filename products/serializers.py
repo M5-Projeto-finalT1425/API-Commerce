@@ -6,7 +6,7 @@ from .models import Product
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ["id", "name", "quantity", "value", "account"]
+        fields = ["id", "name", "quantity", "value", "category", "account"]
         extra_kwargs = {
             "name": {
                 "validators": [

@@ -53,6 +53,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "drf_spectacular",
     "rest_framework",
+    "django_filters",
 ]
 
 MY_APPS = ["accounts", "carts", "products", "addresses", "orders"]
@@ -151,6 +152,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
 }
 
 SPECTACULAR_SETTINGS = {
