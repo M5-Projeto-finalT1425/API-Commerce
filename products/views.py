@@ -1,3 +1,36 @@
-from django.shortcuts import render
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from products.permissions import IsAdminOrStaffOrCreate, StaffOrGET
+from rest_framework.generics import (
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+    RetrieveAPIView,
+)
+from .models import Product
+from .serializers import ProductSerializer
 
-# Create your views here.
+
+class ProductView(ListCreateAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAdminOrStaffOrCreate]
+
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+    def perform_create(self, serializer):
+        return serializer.save(account=self.request.user)
+
+
+class ProductDetailViewAndListID(RetrieveUpdateDestroyAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [StaffOrGET]
+
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = "id"
+    lookup_url_kwarg = "product_id"
+
+
+class ProductDetailListView(RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    lookup_field = "name__iexact"
