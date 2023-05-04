@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from addresses.models import Address
+from carts.models import Cart
+import ipdb
 
 
 from .models import Account
@@ -23,7 +25,9 @@ class AccountSerializer(serializers.ModelSerializer):
             return None
 
     def create(self, validated_data: dict) -> Account:
-        return Account.objects.create_user(**validated_data)
+        user = Account.objects.create_user(**validated_data)
+        Cart.objects.create(account=user)
+        return user
 
     def update(self, instance: Account, validated_data: dict) -> Account:
         for key, value in validated_data.items():
@@ -48,8 +52,9 @@ class AccountSerializer(serializers.ModelSerializer):
             "is_staff",
             "is_superuser",
             "address",
+            "cart",
         ]
-        read_only_fields = ["is_superuser"]
+        read_only_fields = ["is_superuser", "cart"]
         extra_kwargs = {
             "password": {"write_only": True},
             "username": {
