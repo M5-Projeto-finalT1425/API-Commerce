@@ -9,7 +9,6 @@ from .permissions import IsAdminOrCreate, IsAdminOrOwner
 class AccountView(ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAdminOrCreate]
-
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
