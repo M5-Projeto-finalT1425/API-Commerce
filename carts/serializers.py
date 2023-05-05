@@ -1,14 +1,14 @@
 from rest_framework import serializers
 from .models import Cart
-import ipdb
+from django.shortcuts import get_object_or_404
 
 
 class CartSerializer(serializers.ModelSerializer):
-    def update(self, validated_data):
-        product_instance = validated_data.pop("product_instance")
-        cart = validated_data.account.cart
-        ipdb.set_trace()
-        return cart.product.add(product_instance)
+    def update(self, instance, validated_data):
+        user = validated_data.pop("user")
+        cart = get_object_or_404(Cart, id=user.cart.id)
+        cart.products.add(instance)
+        return cart
 
     class Meta:
         model = Cart
