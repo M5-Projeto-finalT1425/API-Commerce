@@ -5,10 +5,6 @@ urlpatterns = [
     path("accounts/products/", views.ProductView.as_view()),
     path(
         "accounts/products/<int:product_id>/",
-        views.ProductDetailViewAndListID.as_view(),
-    ),
-    path(
-        "accounts/products/<str:name__iexact>/",
-        views.ProductDetailListView.as_view(),
+        views.ProductDetailView.as_view(),
     ),
 ]

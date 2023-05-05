@@ -9,6 +9,7 @@ class Product(models.Model):
     name = models.CharField(max_length=150)
     quantity = models.IntegerField(default=0)
     value = models.DecimalField(max_digits=6, decimal_places=2)
+    category = models.CharField(max_length=50)
     account = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
