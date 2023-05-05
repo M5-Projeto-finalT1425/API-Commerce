@@ -2,7 +2,6 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from addresses.models import Address
 from carts.models import Cart
-import ipdb
 
 
 from .models import Account
@@ -27,6 +26,7 @@ class AccountSerializer(serializers.ModelSerializer):
     def create(self, validated_data: dict) -> Account:
         user = Account.objects.create_user(**validated_data)
         Cart.objects.create(account=user)
+
         return user
 
     def update(self, instance: Account, validated_data: dict) -> Account:
