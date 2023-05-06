@@ -5,6 +5,8 @@ from .serializers import OrderSerializer
 from .models import Order
 from .permissions import IsOrderOwner, IsStaff
 from products.models import Product
+from .email import send_email_order
+
 
 class OrderView(generics.CreateAPIView):
     queryset = Order.objects.all()
@@ -36,6 +38,7 @@ class OrderDetailView(generics.RetrieveUpdateAPIView):
         serializer = self.get_serializer(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
+        send_email_order(instance)
         return Response(serializer.data)
 
 class OrderListView(generics.ListAPIView):

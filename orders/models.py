@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils import timezone
 from accounts.models import Account
-from products.models import Product
 
 class Order(models.Model):
     class Meta:
@@ -21,6 +20,6 @@ class Order(models.Model):
         related_name="orders",
         default=None
     )
-    products = models.ManyToManyField(Product, related_name="orders")
+    products = models.ManyToManyField("products.Product", related_name="orders")
 
     
