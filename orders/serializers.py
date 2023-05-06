@@ -12,7 +12,7 @@ class OrderSerializer(serializers.ModelSerializer):
     def get_products(self, order):
         product_list = []
         for product in order.products.all():
-            product_list.append({"name": product.name, "value": product.value})
+            product_list.append({"name": product.name, "value": product.value, "category": product.category})
         return product_list
 
     class Meta:
