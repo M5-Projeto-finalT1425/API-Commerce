@@ -20,6 +20,8 @@ class OrderSerializer(serializers.ModelSerializer):
                 product_obj.in_stock = False
                 product_obj.save()
 
+        return Order.objects.create(**validated_data)
+
     def update(self, instance: Order, validated_data: dict) -> Order:
         for key, value in validated_data.items():
             setattr(instance, key, value)
