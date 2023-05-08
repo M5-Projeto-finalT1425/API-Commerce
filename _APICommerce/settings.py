@@ -38,6 +38,7 @@ RENDER_EXTERNAL_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS += [RENDER_EXTERNAL_HOSTNAME, "0.0.0.0"]
 
+
 # Application definition
 
 
@@ -103,9 +104,7 @@ DATABASES = {
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
         "HOST": os.getenv("POSTGRES_DB_HOST"),
         "PORT": os.getenv("POSTGRES_DB_PORT"),
-        'OPTIONS': {
-            'options': '-c search_path=public'
-        }
+        "OPTIONS": {"options": "-c search_path=public"},
     },
     "dev": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -119,13 +118,11 @@ if DATABASE_URL:
     )
     DATABASES["default"].update(db_from_env)
     DEBUG = False
-    if not DEBUG:
-        # Tell Django to copy statics to the `staticfiles` directory
-        # in your application directory on Render.
-        STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-        # Turn on WhiteNoise storage backend that takes care of compressing static files
-        # and creating unique names for each version so they can safely be cached forever.
-        STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+if not DEBUG:
+    STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
 # Password validation
@@ -190,6 +187,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.Account"
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-EMAIL_HOST = 'localhost'
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_HOST = "localhost"
 EMAIL_PORT = 1025
