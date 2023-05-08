@@ -20,7 +20,7 @@ class ProductView(ListCreateAPIView):
     filterset_fields = ("id", "name", "category")
 
     def perform_create(self, serializer):
-        return serializer.save(account=self.request.user)
+        return serializer.save(seller=self.request.user)
 
 
 class ProductDetailView(RetrieveUpdateDestroyAPIView):

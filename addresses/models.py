@@ -10,6 +10,6 @@ class Address(models.Model):
     street = models.CharField(max_length=255)
     zip_code = models.CharField(max_length=10)
     number = models.CharField(max_length=3)
-    account = models.OneToOneField(
+    user = models.OneToOneField(
         Account, on_delete=models.CASCADE, null=True, blank=True
     )

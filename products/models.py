@@ -10,10 +10,11 @@ class Product(models.Model):
     quantity = models.IntegerField(default=0)
     value = models.DecimalField(max_digits=6, decimal_places=2)
     category = models.CharField(max_length=50)
-    account = models.ForeignKey(
+    seller = models.ForeignKey(
         Account,
         on_delete=models.CASCADE,
         related_name="products",
         null=True,
         blank=True,
     )
+    in_stock = models.BooleanField(default=True, blank=True, null=True)

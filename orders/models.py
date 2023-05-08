@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from accounts.models import Account
 
+
 class Order(models.Model):
     class Meta:
         ordering = ["id"]
@@ -12,14 +13,9 @@ class Order(models.Model):
         ("ENTREGUE", "Entregue"),
     )
 
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="PEDIDO REALIZADO")
-    created_at = models.DateTimeField(default=timezone.now)
-    account = models.ForeignKey(
-        Account, 
-        on_delete=models.CASCADE,
-        related_name="orders",
-        default=None
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, default="PEDIDO REALIZADO"
     )
-    products = models.ManyToManyField("products.Product", related_name="orders")
-
-    
+    created_at = models.DateTimeField(default=timezone.now)
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name="orders")
+    products = models.JSONField()
