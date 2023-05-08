@@ -14,7 +14,7 @@ class AddressView(CreateAPIView):
     serializer_class = AddressSerializer
 
     def perform_create(self, serializer):
-        return serializer.save(account=self.request.user)
+        return serializer.save(user=self.request.user)
 
 
 class AddressDetailView(RetrieveUpdateDestroyAPIView):

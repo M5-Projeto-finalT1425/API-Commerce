@@ -25,7 +25,7 @@ class AccountSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data: dict) -> Account:
         user = Account.objects.create_user(**validated_data)
-        Cart.objects.create(account=user)
+        Cart.objects.create(user=user)
 
         return user
 
