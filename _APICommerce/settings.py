@@ -53,6 +53,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "drf_spectacular",
     "rest_framework",
+    "django_filters",
 ]
 
 MY_APPS = ["accounts", "carts", "products", "addresses", "orders"]
@@ -102,6 +103,9 @@ DATABASES = {
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
         "HOST": os.getenv("POSTGRES_DB_HOST"),
         "PORT": os.getenv("POSTGRES_DB_PORT"),
+        'OPTIONS': {
+            'options': '-c search_path=public'
+        }
     },
     "dev": {
         "ENGINE": "django.db.backends.sqlite3",
@@ -151,6 +155,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 10,
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
 }
 
 SPECTACULAR_SETTINGS = {
@@ -184,3 +189,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.Account"
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
