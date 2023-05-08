@@ -1,5 +1,6 @@
 from django.core.mail import send_mail
 
+
 def send_email_order(order):
     subject = f"Pedido {order.id} atualizado"
     message = f"O status do seu pedido foi atualizado para {order.status}."
